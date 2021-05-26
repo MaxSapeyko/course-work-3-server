@@ -53,7 +53,7 @@ class ConscriptController {
     }
   }
 
-  async getAll(res) {
+  async getAll(req, res) {
     const conscripts = await Conscript.findAll();
     return res.json(conscripts);
   }
