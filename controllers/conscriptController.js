@@ -64,6 +64,13 @@ class ConscriptController {
     });
     return res.json(conscripts);
   }
+
+  async delById(req, res) {
+    const conscripts = await Conscript.destroy({
+      where: { id: req.params.id },
+    });
+    return res.json(conscripts);
+  }
 }
 
 module.exports = new ConscriptController();
