@@ -36,25 +36,18 @@ const Relative = sequelize.define("relative", {
   name: { type: DataTypes.STRING },
   surname: { type: DataTypes.STRING },
   homeAddress: { type: DataTypes.STRING },
-  phoneNumber: { type: DataTypes.STRING },
+  phoneNumber: { type: DataTypes.STRING, unique: true },
 });
 
 const Work = sequelize.define("work", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  organizationName: { type: DataTypes.STRING },
-  post: { type: DataTypes.STRING },
-  admissionDate: { type: DataTypes.DATEONLY },
-  releaseDate: { type: DataTypes.DATEONLY },
-  address: { type: DataTypes.STRING },
+  organizationName: { type: DataTypes.STRING, unique: true },
+  address: { type: DataTypes.STRING},
 });
 
 const Study = sequelize.define("study", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  organizationName: { type: DataTypes.STRING },
-  faculty: { type: DataTypes.STRING },
-  course: { type: DataTypes.INTEGER },
-  admissionDate: { type: DataTypes.DATEONLY },
-  releaseDate: { type: DataTypes.DATEONLY },
+  organizationName: { type: DataTypes.STRING, unique: true },
   address: { type: DataTypes.STRING },
 });
 

@@ -1,10 +1,9 @@
 const { Work } = require('../models/models');
-const ApiError = require('../error/ApiError');
 
 class WorkController {
   async create(req, res) {
-    const { organizationName, post, admissionDate, releaseDate, address } = req.body;
-    const work = await Work.create({ organizationName, post, admissionDate, releaseDate, address });
+    const { organizationName, address } = req.body;
+    const work = await Work.create({ organizationName, address });
     return res.json(work);
   }
 
