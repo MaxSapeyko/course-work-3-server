@@ -26,7 +26,7 @@ class ConscriptController {
       let fileName = uuid.v4() + '.jpg';
       photo.mv(path.resolve(__dirname, '..', 'static', fileName));
       const _id = uuid.v4();
-      const callUpId = 0;
+      const callUpId = 2;
 
       const conscript = await Conscript.create({
         _id,

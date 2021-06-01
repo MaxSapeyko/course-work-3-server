@@ -1,10 +1,23 @@
 const { CallUp } = require('../models/models');
-const ApiError = require('../error/ApiError');
 
 class CallUpController {
   async create(req, res) {
     const { callUpDate, commissariatId, conscriptList } = req.body;
-    const callUp = await CallUp.create({ callUpDate, commissariatId, conscriptList });
+    const callUp = await CallUp.create({
+      callUpDate,
+      commissariatId,
+      conscriptList,
+    });
+    return res.json(callUp);
+  }
+
+  async updateConscripts(req, res) {
+    const callUp = await CallUp.findByPk(req.params.id);
+    const conscriptList = callUp.conscriptList.splice(
+      callUp.conscriptList.indexOf(req.params.conscriptId),
+      1
+    );
+    callUp.update({ conscriptList: conscriptList});
     return res.json(callUp);
   }
 
@@ -14,7 +27,9 @@ class CallUpController {
   }
 
   async getByCommId(req, res) {
-    const callUps = await CallUp.findAll({ where: { commissariatId: req.params.id } });
+    const callUps = await CallUp.findAll({
+      where: { commissariatId: req.params.id },
+    });
     return res.json(callUps);
   }
 }
