@@ -71,6 +71,12 @@ class ConscriptController {
     });
     return res.json(conscripts);
   }
+
+  async updateCallUpId(req, res) {
+    const conscript = await Conscript.findByPk(req.params.id);
+    conscript.update({ callUpId: req.params.callUpId});
+    return res.json(conscript);
+  }
 }
 
 module.exports = new ConscriptController();
