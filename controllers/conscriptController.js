@@ -66,11 +66,22 @@ class ConscriptController {
     return res.json(conscripts);
   }
 
-  async getSortedBYBirthday(req, res) {
+  async getSortedByBirthday(req, res) {
     const conscripts = await Conscript.findAll({
       where: {
         birthday: {
           [Op.between]: [req.params.start, req.params.end],
+        },
+      },
+    });
+    return res.json(conscripts);
+  }
+
+  async getSortedByLastName(req, res) {
+    const conscripts = await Conscript.findAll({
+      where: {
+        lastname: {
+          [Op.like]: req.params.inputStr + '%',
         },
       },
     });
