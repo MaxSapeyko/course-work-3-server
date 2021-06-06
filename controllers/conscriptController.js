@@ -2,6 +2,7 @@ const { Conscript } = require('../models/models');
 const ApiError = require('../error/ApiError');
 const uuid = require('uuid');
 const path = require('path');
+const { Op } = require('sequelize');
 
 class ConscriptController {
   async create(req, res, next) {
@@ -65,6 +66,17 @@ class ConscriptController {
     return res.json(conscripts);
   }
 
+  async getSortedBYBirthday(req, res) {
+    const conscripts = await Conscript.findAll({
+      where: {
+        birthday: {
+          [Op.between]: [req.params.start, req.params.end],
+        },
+      },
+    });
+    return res.json(conscripts);
+  }
+
   async delById(req, res) {
     const conscripts = await Conscript.destroy({
       where: { id: req.params.id },
@@ -74,7 +86,7 @@ class ConscriptController {
 
   async updateCallUpId(req, res) {
     const conscript = await Conscript.findByPk(req.params.id);
-    conscript.update({ callUpId: req.params.callUpId});
+    conscript.update({ callUpId: req.params.callUpId });
     return res.json(conscript);
   }
 }
