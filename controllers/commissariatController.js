@@ -3,8 +3,8 @@ const ApiError = require('../error/ApiError');
 
 class CommissariatController {
   async create(req, res) {
-    const { name, address, email, phoneNumber } = req.body;
-    const commissariat = await Commissariat.create({ name, address, email, phoneNumber });
+    const { name, address, phoneNumber } = req.body;
+    const commissariat = await Commissariat.create({ name, address, phoneNumber });
     return res.json(commissariat);
   }
 

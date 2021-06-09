@@ -6,7 +6,6 @@ const Commissariat = sequelize.define('commissariat', {
   name: { type: DataTypes.STRING },
   address: { type: DataTypes.STRING },
   phoneNumber: { type: DataTypes.STRING },
-  email: { type: DataTypes.STRING },
 });
 
 const CallUp = sequelize.define('call_up', {
