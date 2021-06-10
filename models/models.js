@@ -1,11 +1,11 @@
 const sequelize = require('../db');
-const { DataTypes, ARRAY, INTEGER } = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 const Commissariat = sequelize.define('commissariat', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  name: { type: DataTypes.STRING },
-  address: { type: DataTypes.STRING },
-  phoneNumber: { type: DataTypes.STRING },
+  name: { type: DataTypes.STRING, unique: true, require: true },
+  address: { type: DataTypes.STRING, unique: true, require: true },
+  phoneNumber: { type: DataTypes.STRING, unique: true, require: true },
 });
 
 const CallUp = sequelize.define('call_up', {
@@ -16,52 +16,38 @@ const CallUp = sequelize.define('call_up', {
 
 const Conscript = sequelize.define('conscript', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  lastname: { type: DataTypes.STRING },
-  name: { type: DataTypes.STRING },
-  surname: { type: DataTypes.STRING },
-  birthday: { type: DataTypes.DATEONLY },
-  placeOfBirth: { type: DataTypes.STRING },
-  sex: { type: DataTypes.STRING },
-  homeAddress: { type: DataTypes.STRING },
-  photo: { type: DataTypes.STRING },
-  passportCode: { type: DataTypes.STRING, unique: true },
-  registrationNumber: { type: DataTypes.STRING, unique: true },
-  phoneNumber: { type: DataTypes.STRING, unique: true },
+  lastname: { type: DataTypes.STRING, require: true },
+  name: { type: DataTypes.STRING, require: true },
+  surname: { type: DataTypes.STRING, require: true },
+  birthday: { type: DataTypes.DATEONLY, require: true },
+  placeOfBirth: { type: DataTypes.STRING, require: true },
+  sex: { type: DataTypes.STRING, require: true },
+  homeAddress: { type: DataTypes.STRING, require: true },
+  photo: { type: DataTypes.STRING, require: true },
+  passportCode: { type: DataTypes.STRING, unique: true, require: true },
+  registrationNumber: { type: DataTypes.STRING, unique: true, require: true },
+  phoneNumber: { type: DataTypes.STRING, unique: true, require: true },
 });
 
 const Relative = sequelize.define('relative', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  lastname: { type: DataTypes.STRING },
-  name: { type: DataTypes.STRING },
-  surname: { type: DataTypes.STRING },
-  homeAddress: { type: DataTypes.STRING },
-  phoneNumber: { type: DataTypes.STRING, unique: true },
+  lastname: { type: DataTypes.STRING, require: true },
+  name: { type: DataTypes.STRING, require: true },
+  surname: { type: DataTypes.STRING, require: true },
+  homeAddress: { type: DataTypes.STRING, require: true },
+  phoneNumber: { type: DataTypes.STRING, unique: true, require: true },
 });
 
 const Work = sequelize.define('work', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  organizationName: { type: DataTypes.STRING, unique: true },
-  address: { type: DataTypes.STRING },
+  organizationName: { type: DataTypes.STRING, require: true },
+  address: { type: DataTypes.STRING, require: true },
 });
 
 const Study = sequelize.define('study', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  organizationName: { type: DataTypes.STRING, unique: true },
-  address: { type: DataTypes.STRING },
-});
-
-const PersonalFile = sequelize.define('personalFile', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  registrationDate: { type: DataTypes.DATEONLY },
-  releaseDate: { type: DataTypes.DATEONLY },
-  dismissalReason: { type: DataTypes.STRING },
-});
-
-const MedicalCertificate = sequelize.define('medicalCertificate', {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  commissionDate: { type: DataTypes.DATEONLY },
-  illness: { type: DataTypes.ARRAY(DataTypes.STRING), allowNull: true },
-  conclusion: { type: DataTypes.STRING },
+  organizationName: { type: DataTypes.STRING, unique: true, require: true },
+  address: { type: DataTypes.STRING, require: true },
 });
 
 Commissariat.hasMany(CallUp);
@@ -73,17 +59,11 @@ Conscript.belongsTo(CallUp);
 Relative.hasMany(Conscript);
 Conscript.belongsTo(Relative);
 
-Conscript.hasOne(PersonalFile);
-PersonalFile.belongsTo(Conscript);
-
 Work.hasMany(Conscript);
 Conscript.belongsTo(Work);
 
 Study.hasMany(Conscript);
 Conscript.belongsTo(Study);
-
-PersonalFile.hasOne(MedicalCertificate);
-MedicalCertificate.belongsTo(PersonalFile);
 
 module.exports = {
   Commissariat,
@@ -92,6 +72,4 @@ module.exports = {
   Relative,
   Work,
   Study,
-  PersonalFile,
-  MedicalCertificate,
 };
