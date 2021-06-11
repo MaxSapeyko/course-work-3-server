@@ -5,7 +5,12 @@ const Commissariat = sequelize.define('commissariat', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, unique: true, require: true },
   address: { type: DataTypes.STRING, unique: true, require: true },
-  phoneNumber: { type: DataTypes.STRING, unique: true, require: true },
+  phoneNumber: {
+    type: DataTypes.STRING,
+    unique: true,
+    require: true,
+    validate: { len: [9, 13] },
+  },
 });
 
 const CallUp = sequelize.define('call_up', {
@@ -24,9 +29,14 @@ const Conscript = sequelize.define('conscript', {
   sex: { type: DataTypes.STRING, require: true },
   homeAddress: { type: DataTypes.STRING, require: true },
   photo: { type: DataTypes.STRING, require: true },
-  passportCode: { type: DataTypes.STRING, unique: true, require: true },
-  registrationNumber: { type: DataTypes.STRING, unique: true, require: true },
-  phoneNumber: { type: DataTypes.STRING, unique: true, require: true },
+  passportCode: { type: DataTypes.STRING, unique: true, require: true, validate: { len: [8, 8] }, },
+  registrationNumber: { type: DataTypes.STRING, unique: true, require: true, validate: { len: [10, 10] } },
+  phoneNumber: {
+    type: DataTypes.STRING,
+    unique: true,
+    require: true,
+    validate: { len: [9, 13] },
+  },
 });
 
 const Relative = sequelize.define('relative', {
@@ -35,7 +45,12 @@ const Relative = sequelize.define('relative', {
   name: { type: DataTypes.STRING, require: true },
   surname: { type: DataTypes.STRING, require: true },
   homeAddress: { type: DataTypes.STRING, require: true },
-  phoneNumber: { type: DataTypes.STRING, unique: true, require: true },
+  phoneNumber: {
+    type: DataTypes.STRING,
+    unique: true,
+    require: true,
+    validate: { len: [9, 13] },
+  },
 });
 
 const Work = sequelize.define('work', {

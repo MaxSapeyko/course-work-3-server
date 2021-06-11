@@ -3,19 +3,37 @@ const ApiError = require('../error/ApiError');
 
 class RelativeController {
   async create(req, res) {
-    const { lastname, name, surname, homeAddress, phoneNumber } = req.body;
-    const relative = await Relative.create({ lastname, name, surname, homeAddress, phoneNumber });
-    return res.json(relative);
+    try {
+      const { lastname, name, surname, homeAddress, phoneNumber } = req.body;
+      const relative = await Relative.create({
+        lastname,
+        name,
+        surname,
+        homeAddress,
+        phoneNumber,
+      });
+      return res.json(relative);
+    } catch (error) {
+      return res.status(400).json(`Error ${error.message}`);
+    }
   }
 
   async getAll(req, res) {
-    const relatives = await Relative.findAll();
-    return res.json(relatives);
+    try {
+      const relatives = await Relative.findAll();
+      return res.json(relatives);
+    } catch (error) {
+      return res.status(400).json(`Error ${error.message}`);
+    }
   }
 
   async getById(req, res) {
-    const relative = await Relative.findByPk(req.params.id);
-    return res.json(relative);
+    try {
+      const relative = await Relative.findByPk(req.params.id);
+      return res.json(relative);
+    } catch (error) {
+      return res.status(400).json(`Error ${error.message}`);
+    }
   }
 }
 

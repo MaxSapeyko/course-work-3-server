@@ -54,51 +54,75 @@ class ConscriptController {
     }
   }
 
-  async getAll(req, res) {
-    const conscripts = await Conscript.findAll();
-    return res.json(conscripts);
+  async getAll(req, res, next) {
+    try {
+      const conscripts = await Conscript.findAll();
+      return res.json(conscripts);
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
+    }
   }
 
-  async getByIdArr(req, res) {
-    const conscripts = await Conscript.findAll({
-      where: { id: req.body.conscriptId },
-    });
-    return res.json(conscripts);
+  async getByIdArr(req, res, next) {
+    try {
+      const conscripts = await Conscript.findAll({
+        where: { id: req.body.conscriptId },
+      });
+      return res.json(conscripts);
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
+    }
   }
 
-  async getSortedByBirthday(req, res) {
-    const conscripts = await Conscript.findAll({
-      where: {
-        birthday: {
-          [Op.between]: [req.params.start, req.params.end],
+  async getSortedByBirthday(req, res, next) {
+    try {
+      const conscripts = await Conscript.findAll({
+        where: {
+          birthday: {
+            [Op.between]: [req.params.start, req.params.end],
+          },
         },
-      },
-    });
-    return res.json(conscripts);
+      });
+      return res.json(conscripts);
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
+    }
   }
 
-  async getSortedByLastName(req, res) {
-    const conscripts = await Conscript.findAll({
-      where: {
-        lastname: {
-          [Op.like]: req.params.inputStr + '%',
+  async getSortedByLastName(req, res, next) {
+    try {
+      const conscripts = await Conscript.findAll({
+        where: {
+          lastname: {
+            [Op.like]: req.params.inputStr + '%',
+          },
         },
-      },
-    });
-    return res.json(conscripts);
+      });
+      return res.json(conscripts);
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
+    }
   }
 
-  async delById(req, res) {
-    const conscripts = await Conscript.destroy({
-      where: { id: req.params.id },
-    });
-    return res.json(conscripts);
+  async delById(req, res, next) {
+    try {
+      const conscripts = await Conscript.destroy({
+        where: { id: req.params.id },
+      });
+      return res.json(conscripts);
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
+    }
   }
 
-  async updateCallUpId(req, res) {
-    const conscript = await Conscript.findByPk(req.params.id);
-    conscript.update({ callUpId: req.params.callUpId });
-    return res.json(conscript);
+  async updateCallUpId(req, res, next) {
+    try {
+      const conscript = await Conscript.findByPk(req.params.id);
+      conscript.update({ callUpId: req.params.callUpId });
+      return res.json(conscript);
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
+    }
   }
 }
 

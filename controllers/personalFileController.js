@@ -3,14 +3,32 @@ const ApiError = require('../error/ApiError');
 
 class PersonalFileController {
   async create(req, res) {
-    const { registrationDate, releaseDate, dismissalReason, conscriptId } = req.body;
-    const personalFile = await PersonalFile.create({ registrationDate, releaseDate, dismissalReason, conscriptId });
-    return res.json(personalFile);
+    try {
+      const {
+        registrationDate,
+        releaseDate,
+        dismissalReason,
+        conscriptId,
+      } = req.body;
+      const personalFile = await PersonalFile.create({
+        registrationDate,
+        releaseDate,
+        dismissalReason,
+        conscriptId,
+      });
+      return res.json(personalFile);
+    } catch (error) {
+      return res.status(400).json(`Error ${error.message}`);
+    }
   }
 
   async getAll(req, res) {
-    const personalFiles = await PersonalFile.findAll();
-    return res.json(personalFiles);
+    try {
+      const personalFiles = await PersonalFile.findAll();
+      return res.json(personalFiles);
+    } catch (error) {
+      return res.status(400).json(`Error ${error.message}`);
+    }
   }
 }
 

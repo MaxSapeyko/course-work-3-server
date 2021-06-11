@@ -3,14 +3,26 @@ const ApiError = require('../error/ApiError');
 
 class CommissariatController {
   async create(req, res) {
-    const { name, address, phoneNumber } = req.body;
-    const commissariat = await Commissariat.create({ name, address, phoneNumber });
-    return res.json(commissariat);
+    try {
+      const { name, address, phoneNumber } = req.body;
+      const commissariat = await Commissariat.create({
+        name,
+        address,
+        phoneNumber,
+      });
+      return res.json(commissariat);
+    } catch (error) {
+      return res.status(400).json(`Error ${error.message}`);
+    }
   }
 
   async getAll(req, res) {
-    const commissariats = await Commissariat.findAll();
-    return res.json(commissariats);
+    try {
+      const commissariats = await Commissariat.findAll();
+      return res.json(commissariats);
+    } catch (error) {
+      return res.status(400).json(`Error ${error.message}`);
+    }
   }
 }
 
