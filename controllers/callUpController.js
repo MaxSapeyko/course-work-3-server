@@ -5,7 +5,7 @@ class CallUpController {
     try {
       const { callUpDate, commissariatId, conscriptList } = req.body;
 
-      if ((commissariatId.length > 0, conscriptList > 0)) {
+      if ((commissariatId > 0, conscriptList.length > 0)) {
         const callUp = await CallUp.create({
           callUpDate,
           commissariatId,
